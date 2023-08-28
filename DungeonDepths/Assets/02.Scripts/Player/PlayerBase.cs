@@ -6,7 +6,6 @@ public class PlayerBase : MonoBehaviour
 {
     // 구본혁
     // 플레이어의 상위 클래스
-    // 세가지 종류의 플레이어가 공통적으로 가지는 기능들과 데이터들을 가져야한다. 
 
     #region 상태관련
     public bool IsAttack { get; set; }
@@ -71,7 +70,7 @@ public class PlayerBase : MonoBehaviour
 
     public float attackStateDuration { get; set; } // 소드맨 콤보 공격 상태 지속 시간
     protected Vector3 moveDir;
-    public Animator animator;
+    public Animator animator; 
     public float takedDamage;
     protected PlayerUI playerUI;
     protected virtual void Awake()

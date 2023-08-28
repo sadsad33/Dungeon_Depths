@@ -67,7 +67,6 @@ public class GolemMissile : MonoBehaviour
     void Explosion()
     {
         GameObject impact = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        
     }
     //TODO
     /*
