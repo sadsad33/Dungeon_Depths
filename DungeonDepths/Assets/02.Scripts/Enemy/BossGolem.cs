@@ -29,7 +29,7 @@ public class BossGolem : BossBaseFSM
         
         TargetTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
         BossTransform = GetComponent<Transform>();
-        TraceRange = 50f; // 보스방 크기와 동일
+        TraceRange = 100f; // 보스방 크기와 동일
         
         AttackDelay = 5f;
         MeleeRange = 3.5f;
@@ -69,7 +69,7 @@ public class BossGolem : BossBaseFSM
     }
     void Update()
     {
-        //Debug.Log(stateMachine.CurrentState);
+        Debug.Log("현재 상태 : " + stateMachine.CurrentState);
         stateMachine.Execute();
         //rbody.velocity = Vector3.zero;
         //rbody.angularVelocity = Vector3.zero;

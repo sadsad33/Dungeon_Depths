@@ -12,7 +12,7 @@ namespace FinalBossState
 
         public override void Enter(FinalBoss f)
         {
-            Debug.Log("대기 상태 시작");
+            //Debug.Log("대기 상태 시작");
             stateEnterTime = Time.time;
             f.animator.SetFloat("MoveSpeed", 0);
             if(f.stateMachine.PreviousState == f.stateMachine.GetState((int)FinalBoss.FinalBossStates.AttackIdle))
@@ -24,7 +24,7 @@ namespace FinalBossState
         }
         public override void Execute(FinalBoss f)
         {
-            Debug.Log("대기 상태 중");
+            //Debug.Log("대기 상태 중");
             if(Time.time - stateEnterTime < stateDuration) return;
             f.CheckTraceState();
         }

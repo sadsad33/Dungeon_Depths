@@ -15,7 +15,7 @@ namespace BossState
         }
         public override void Execute(BossBaseFSM b)
         {
-            if(Time.time - idleEnterTime >= b.delayTime)
+            if (Time.time - idleEnterTime >= b.delayTime)
                 b.CheckTraceState();
         }
         public override void Exit(BossBaseFSM b)
@@ -23,6 +23,7 @@ namespace BossState
 
         }
     }
+
     #endregion
     #region 상태 : 일반속도 추적
     class Trace : State<BossBaseFSM>
@@ -33,9 +34,10 @@ namespace BossState
         }
         public override void Execute(BossBaseFSM b)
         {
+            Debug.Log("현재 속도 : " + b.MoveSpeed);
             b.Rotate();
+            PathRequestManager.RequestPath(b.BossTransform.position, b.TargetTransform.position, b.OnPathFound);
             b.CheckTraceState();
-            b.Trace();
             b.CheckAttackState();
         }
         public override void Exit(BossBaseFSM b)
@@ -49,14 +51,15 @@ namespace BossState
         float moveSpeed;
         public override void Enter(BossBaseFSM b)
         {
-            moveSpeed = b.MoveSpeed * 2;
+            moveSpeed = b.MoveSpeed + 2f;
             b.Animator.SetFloat("MoveSpeed", moveSpeed);
         }
         public override void Execute(BossBaseFSM b)
         {
+            Debug.Log("현재 속도 : " + moveSpeed);
             b.Rotate();
+            PathRequestManager.RequestPath(b.BossTransform.position, b.TargetTransform.position, b.OnPathFound);
             b.CheckTraceState();
-            b.Trace();
             b.CheckAttackState();
         }
         public override void Exit(BossBaseFSM b)
@@ -67,15 +70,20 @@ namespace BossState
     #region 상태 : 근접공격
     class MeleeAttack : State<BossBaseFSM>
     {
+        Vector3 initPosition;
         float setTime;
         int attackIndex;
         public override void Enter(BossBaseFSM b)
         {
+            initPosition = b.BossTransform.position;
             setTime = Time.time;
 
             attackIndex = Random.Range(0, 2);
             b.Animator.SetInteger("MeleeAttackIndex", attackIndex);
             b.Animator.SetTrigger("MeleeAttack" + attackIndex);
+            if (b.Animator.GetCurrentAnimatorStateInfo(0).IsName("MeleeAttack" + attackIndex)) {
+                b.BossTransform.position = initPosition;
+            }
             b.PrevAtkTime = Time.time;
             //Debug.Log("근접 공격 기록 : " + b.PrevAtkTime);
         }
@@ -93,15 +101,22 @@ namespace BossState
     #region 상태 : 원거리 공격
     class RangeAttack : State<BossBaseFSM>
     {
+        Vector3 initPosition;
         float setTime = 0;
         int attackIndex;
         public override void Enter(BossBaseFSM b)
         {
+            initPosition = b.BossTransform.position;
             setTime = Time.time;
+            
             attackIndex = Random.Range(0, 2);
             b.Animator.SetInteger("RangeAttackIndex", attackIndex); 
             b.Animator.SetTrigger("RangeAttack" + attackIndex);
+            if (b.Animator.GetCurrentAnimatorStateInfo(0).IsName("RangeAttack" + attackIndex)) {
+                b.BossTransform.position = initPosition;
+            }
             b.PrevAtkTime = Time.time;
+            
             //Debug.Log("원거리 공격 기록 : " + b.PrevAtkTime);
         }
         public override void Execute(BossBaseFSM b)
