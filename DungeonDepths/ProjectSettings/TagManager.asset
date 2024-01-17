@@ -3,7 +3,26 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Floor
+  - SpawnPoint
+  - Portal1
+  - Portal2
+  - Portal3
+  - stage1
+  - node1
+  - node2
+  - node3
+  - node4
+  - Boss
+  - Enemy
+  - Card
+  - Portal
+  - BlockArea
+  - Monster
+  - PlayerAA
+  - FinalBoss
+  - FX
   layers:
   - Default
   - TransparentFX
@@ -11,13 +30,13 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Boss
+  - Enemy
+  - Player
+  - FinalBoss
+  - EnvironmentObject
+  - EnemyBullet
+  - Unwalkable
   - 
   - 
   - 
